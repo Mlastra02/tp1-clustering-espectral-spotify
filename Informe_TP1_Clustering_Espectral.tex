@@ -78,7 +78,7 @@ En esta sección, $G=(V,E)$ es un grafo no dirigido y ponderado con $n$ nodos, p
 
 \subsection{Pregunta 2. La forma cuadrática del Laplaciano}
 
-Demostración de la identidad. Por un lado, $x^\top Lx=x^\top Dx-x^\top Ax=\sum_{i,j}a_{ij}x_i^2-\sum_{i,j}a_{ij}x_ix_j$, usando que $d_i=\sum_ja_{ij}$. Por otro lado,
+\textbf{Demostración de la identidad.} Por un lado, $x^\top Lx=x^\top Dx-x^\top Ax=\sum_{i,j}a_{ij}x_i^2-\sum_{i,j}a_{ij}x_ix_j$, usando que $d_i=\sum_ja_{ij}$. Por otro lado,
 \[
 \tfrac12\sum_{i,j}a_{ij}(x_i-x_j)^2=\tfrac12\sum_{i,j}a_{ij}x_i^2+\tfrac12\sum_{i,j}a_{ij}x_j^2-\sum_{i,j}a_{ij}x_ix_j .
 \]
@@ -166,9 +166,9 @@ Sea $U=[v_1\cdots v_k]$ la matriz con los $k$ vectores propios de menor valor pr
 
 \subsection{Problema y datos}
 
-Fuente. \emph{Top Spotify Songs in 73 Countries (Daily Updated)}, publicado en Kaggle con licencia ODC-By. Contiene el Top 50 diario de Spotify de cada país. Se usó todo el período disponible: del 18-10-2023 al 11-06-2025, es decir, 583 días y 2.110.316 filas. El notebook descarga los datos automáticamente.
+\textbf{Fuente.} \emph{Top Spotify Songs in 73 Countries (Daily Updated)}, publicado en Kaggle con licencia ODC-By. Contiene el Top 50 diario de Spotify de cada país. Se usó todo el período disponible: del 18-10-2023 al 11-06-2025, es decir, 583 días y 2.110.316 filas. El notebook descarga los datos automáticamente.
 
-La red.
+\textbf{La red.}
 \begin{itemize}[leftmargin=1.5em]
 \item Nodos: los 72 países con ranking propio. Se excluye el Top 50 Global, que no es un país.
 \item Aristas: unen cada país con sus 12 países de gustos más parecidos.
@@ -176,7 +176,7 @@ La red.
 \item Dirección: la red es no dirigida y tiene 665 aristas.
 \end{itemize}
 
-Pregunta de análisis. \emph{¿Cómo se agrupan los países según lo que escuchan en Spotify, y qué explica mejor esos grupos: el idioma, la geografía o el clima? ¿Qué rol cumplen los éxitos globales?} Subpreguntas:
+\textbf{Pregunta de análisis.} \emph{¿Cómo se agrupan los países según lo que escuchan en Spotify, y qué explica mejor esos grupos: el idioma, la geografía o el clima? ¿Qué rol cumplen los éxitos globales?} Subpreguntas:
 \begin{enumerate}[leftmargin=1.5em]
 \item ¿Cuántos grupos sugiere el espectro?
 \item ¿Las comunidades coinciden más con idioma, continente o clima?
@@ -184,22 +184,22 @@ Pregunta de análisis. \emph{¿Cómo se agrupan los países según lo que escuch
 \item ¿Con quién se agrupa Chile y qué países son puente?
 \end{enumerate}
 
-Por qué clustering espectral. No sabemos de antemano cuántos grupos hay y solo tenemos similitudes entre países. El espectro indica directamente si la red se separa en bloques, cuántos grupos hay y qué países están en la frontera.
+\textbf{¿Por qué clustering espectral?} Cada país tiene un perfil de más de 23 mil canciones, y como casi todos comparten los éxitos globales, agrupar esos perfiles directamente separa mal a los países. Es más natural representarlos como una red de similitudes y buscar comunidades en ella. El clustering espectral hace eso: el espectro del Laplaciano indica si la red se separa en bloques y cuántos grupos sugiere (\emph{eigengap}), sin fijar ese número de antemano, y sus vectores propios entregan una representación de pocas dimensiones donde los grupos quedan separados.
 
 \subsection{Construcción y preparación de la red}\label{sec:construccion}
 
-Decisiones de preprocesamiento.
+\textbf{Decisiones de preprocesamiento.}
 \begin{itemize}[leftmargin=1.5em]
 \item Se excluyó el Top 50 Global.
 \item Se conservaron las posiciones $\le50$ y se eliminaron 90 filas duplicadas.
 \item Cada canción se identificó por \emph{nombre + artistas}, porque una misma canción puede tener varios identificadores según el mercado. Así quedan 23.021 canciones, contra 24.977 identificadores.
 \end{itemize}
 
-Perfiles y similitud. Cada país $c$ se representa con el vector $x_c$, donde $x_c(s)$ es el número de días que la canción $s$ estuvo en su Top 50. La similitud entre dos países es el coseno $s_{ij}=\langle x_i,x_j\rangle/(\|x_i\|\|x_j\|)$. El coseno compara proporciones, así que no importa que algunos países tengan menos días de datos (Reino Unido tiene 418).
+\textbf{Perfiles y similitud.} Cada país $c$ se representa con el vector $x_c$, donde $x_c(s)$ es el número de días que la canción $s$ estuvo en su Top 50. La similitud entre dos países es el coseno $s_{ij}=\langle x_i,x_j\rangle/(\|x_i\|\|x_j\|)$. El coseno compara proporciones, así que no importa que algunos países tengan menos días de datos (Reino Unido tiene 418).
 
-Construcción de la red. Casi todos los países comparten algún éxito global, así que conectar a todos con todos diluye la estructura. Se conectó cada país con sus $k$ más parecidos y se simetrizó la red. Esto garantiza que no haya nodos aislados y que no haya \emph{loops}.
+\textbf{Construcción de la red.} Casi todos los países comparten algún éxito global, así que conectar a todos con todos diluye la estructura. Se conectó cada país con sus $k$ más parecidos y se simetrizó la red. Esto garantiza que no haya nodos aislados y que no haya \emph{loops}.
 
-Elección de $k$ y componentes conexas. Se eligió el menor $k$ que deja la red conexa, que resultó ser $k=12$. Para $k\le11$ la red tiene dos componentes: los 17 países hispanohablantes de América Latina más España, y el resto del mundo (Figura~\ref{fig:conect}). Es decir, ningún país hispano tiene a un país no hispano entre sus 11 más parecidos. En ese caso el valor propio $0$ es doble, como predice la Pregunta 4c.
+\textbf{Elección de $k$ y componentes conexas.} Se eligió el menor $k$ que deja la red conexa, que resultó ser $k=12$. Para $k\le11$ la red tiene dos componentes: los 17 países hispanohablantes de América Latina más España, y el resto del mundo (Figura~\ref{fig:conect}). Es decir, ningún país hispano tiene a un país no hispano entre sus 11 más parecidos. En ese caso el valor propio $0$ es doble, como predice la Pregunta 4c.
 
 \begin{figure}[H]
 \centering
@@ -207,7 +207,7 @@ Elección de $k$ y componentes conexas. Se eligió el menor $k$ que deja la red 
 \caption{Número de componentes conexas según el número de vecinos $k$.}\label{fig:conect}
 \end{figure}
 
-Atributos para evaluar. Para cada país se registró su continente, su idioma principal y su clima. El clima se definió según dónde vive la población: a cada ciudad de más de 15.000 habitantes (GeoNames) se le asignó su clase climática Köppen-Geiger 1991--2020 y su temperatura media (WorldClim), y se calculó la proporción de población urbana en cada grupo (Tropical, Seco, Templado, Continental o Polar). Un país es ``Variado'' solo si es imposible encasillarlo: ningún grupo reúne al menos el 60\,\% de la población y la temperatura varía en $\pm3\,^\circ$C o más entre sus ciudades. Así, EE.UU. (53\,\% templado, $\pm4{,}6\,^\circ$C) queda Variado y Brasil (63\,\% tropical) queda Tropical. Los países variados son EE.UU., México, Bolivia, Ecuador y Guatemala.
+\textbf{Atributos para evaluar.} Para cada país se registró su continente, su idioma principal y su clima. El clima se definió según dónde vive la población: a cada ciudad de más de 15.000 habitantes (GeoNames) se le asignó su clase climática Köppen-Geiger 1991--2020 y su temperatura media (WorldClim), y se calculó la proporción de población urbana en cada grupo (Tropical, Seco, Templado, Continental o Polar). Un país es ``Variado'' solo si es imposible encasillarlo: ningún grupo reúne al menos el 60\,\% de la población y la temperatura varía en $\pm3\,^\circ$C o más entre sus ciudades. Así, EE.UU. (53\,\% templado, $\pm4{,}6\,^\circ$C) queda Variado y Brasil (63\,\% tropical) queda Tropical. Los países variados son EE.UU., México, Bolivia, Ecuador y Guatemala.
 
 \subsection{Implementación del método espectral}
 
@@ -222,7 +222,7 @@ Se usa $L_{sym}$ porque los grados son muy heterogéneos: van de $0{,}07$ (Niger
 
 \subsection{Resultados e interpretación}
 
-Espectro y \emph{eigengap}. Los primeros valores propios de $L_{sym}$ son $0$; $0{,}0003$; $0{,}313$; $0{,}384$; $0{,}661$; \dots{} El mayor salto ocurre después de $\lambda_2$ y el segundo después de $\lambda_4$ (Figura~\ref{fig:espectro}). Por eso se analizan $k=2$ y $k=4$. Además, $\lambda_2\approx0$: la red es conexa, pero está casi separada en dos bloques.
+\textbf{Espectro y \emph{eigengap}.} Los primeros valores propios de $L_{sym}$ son $0$; $0{,}0003$; $0{,}313$; $0{,}384$; $0{,}661$; \dots{} El mayor salto ocurre después de $\lambda_2$ y el segundo después de $\lambda_4$ (Figura~\ref{fig:espectro}). Por eso se analizan $k=2$ y $k=4$. Además, $\lambda_2\approx0$: la red es conexa, pero está casi separada en dos bloques.
 
 \begin{figure}[H]
 \centering
@@ -230,7 +230,7 @@ Espectro y \emph{eigengap}. Los primeros valores propios de $L_{sym}$ son $0$; $
 \caption{Valores propios de $L_{sym}$ y \emph{eigengap}. Los saltos más grandes ocurren tras $k=2$ y tras $k=4$.}\label{fig:espectro}
 \end{figure}
 
-Vector de Fiedler. Su signo separa exactamente a los 18 países hispanos del resto (Figura~\ref{fig:fiedler}). Como $\lambda_2$ es casi cero, el vector es prácticamente constante dentro de cada bloque.
+\textbf{Vector de Fiedler.} Su signo separa exactamente a los 18 países hispanos del resto (Figura~\ref{fig:fiedler}). Como $\lambda_2$ es casi cero, el vector es prácticamente constante dentro de cada bloque.
 
 \begin{figure}[H]
 \centering
@@ -238,7 +238,7 @@ Vector de Fiedler. Su signo separa exactamente a los 18 países hispanos del res
 \caption{Vector de Fiedler ordenado, coloreado por continente.}\label{fig:fiedler}
 \end{figure}
 
-Comunidades. Con $k=2$ se obtienen el bloque hispano (18 países) y el resto del mundo (54). Con $k=4$ (Figura~\ref{fig:mapa}):
+\textbf{Comunidades.} Con $k=2$ se obtienen el bloque hispano (18 países) y el resto del mundo (54). Con $k=4$ (Figura~\ref{fig:mapa}):
 \begin{itemize}[leftmargin=1.5em]
 \item Hispano (18): América Latina hispanohablante y España.
 \item Europa y mundo anglosajón (33): Europa occidental, nórdica, central y báltica, EE.UU., Canadá, Australia, Nueva Zelanda, Sudáfrica, Nigeria, Israel, Turquía y Brasil.
@@ -267,7 +267,7 @@ En la red (Figura~\ref{fig:red}), la única arista entre el bloque hispano y el 
 \caption{Red de países (12 vecinos), coloreada por comunidad. La arista destacada es la única entre bloques.}\label{fig:red}
 \end{figure}
 
-¿Idioma, geografía o clima? Se compararon las comunidades con cada atributo mediante el AMI (información mutua ajustada), que vale $0$ para una partición al azar y $1$ para una coincidencia perfecta (Tabla~\ref{tab:eval}). El continente es el atributo que más coincide, seguido por el idioma, y el clima es el que menos explica. Igualmente, el idioma explica casos que la geografía no explica: España se agrupa con América Latina y no con Europa, y Brasil no se agrupa con sus vecinos hispanohablantes.
+\textbf{¿Idioma, geografía o clima?} Se compararon las comunidades con cada atributo mediante el AMI (información mutua ajustada), que vale $0$ para una partición al azar y $1$ para una coincidencia perfecta (Tabla~\ref{tab:eval}). El continente es el atributo que más coincide, seguido por el idioma, y el clima es el que menos explica. Igualmente, el idioma explica casos que la geografía no explica: España se agrupa con América Latina y no con Europa, y Brasil no se agrupa con sus vecinos hispanohablantes.
 
 El AMI se calcula a partir de la información mutua entre la partición en comunidades $U$ y la categoría $V$:
 \[
@@ -295,11 +295,11 @@ Tamaños & 18 / 54 & 18 / 33 / 19 / 2\\
 \end{tabular}
 \end{table}
 
-Chile y países puente. Chile está en el bloque hispano, y su país más parecido es Perú ($0{,}574$), seguido de Bolivia ($0{,}534$), Paraguay ($0{,}529$) y Ecuador ($0{,}513$). Para medir qué países son puente se usó el \emph{índice de frontera}, la fracción del peso de las aristas de un país que va hacia otras comunidades. El de Chile es $0$: todos sus vecinos son hispanos, de modo que Chile está en el centro de su bloque. Los países puente son Rumania ($0{,}66$), Bulgaria ($0{,}66$), Ucrania ($0{,}61$), Emiratos ($0{,}60$) y Egipto ($0{,}55$), que reparten su afinidad entre Europa y Asia/Medio Oriente.
+\textbf{Chile y países puente.} Chile está en el bloque hispano, y su país más parecido es Perú ($0{,}574$), seguido de Bolivia ($0{,}534$), Paraguay ($0{,}529$) y Ecuador ($0{,}513$). Para medir qué países son puente se usó el \emph{índice de frontera}, la fracción del peso de las aristas de un país que va hacia otras comunidades. El de Chile es $0$: todos sus vecinos son hispanos, de modo que Chile está en el centro de su bloque. Los países puente son Rumania ($0{,}66$), Bulgaria ($0{,}66$), Ucrania ($0{,}61$), Emiratos ($0{,}60$) y Egipto ($0{,}55$), que reparten su afinidad entre Europa y Asia/Medio Oriente.
 
 \subsection{Diseño experimental}
 
-Experimento 1: Laplaciano no normalizado frente a normalizado (Tabla~\ref{tab:e1}). Con $k=2$ ambos dan la misma partición. Con $k=4$, el Laplaciano no normalizado forma dos grupos de un solo país (Nigeria y Turquía), que son nodos de grado bajo cuyo corte es barato, tal como se explicó en la Pregunta 5c. En la Figura~\ref{fig:lnorm} se ve que su segundo vector propio también separa al bloque hispano. El normalizado entrega grupos interpretables y con mayor modularidad.
+\textbf{Experimento 1: Laplaciano no normalizado frente a normalizado} (Tabla~\ref{tab:e1}). Con $k=2$ ambos dan la misma partición. Con $k=4$, el Laplaciano no normalizado forma dos grupos de un solo país (Nigeria y Turquía), que son nodos de grado bajo cuyo corte es barato, tal como se explicó en la Pregunta 5c. En la Figura~\ref{fig:lnorm} se ve que su segundo vector propio también separa al bloque hispano. El normalizado entrega grupos interpretables y con mayor modularidad.
 
 \begin{table}[H]
 \centering\small
@@ -321,7 +321,7 @@ $L_{sym}$ (normalizado) & 33 / 18 / 19 / 2 & 0,514 & 0,313 & 0,485 & ---\\
 \caption{Segundo vector propio del Laplaciano no normalizado.}\label{fig:lnorm}
 \end{figure}
 
-Experimento 2: quitar los éxitos globales (Tabla~\ref{tab:e2}). Se eliminaron las 313 canciones que estuvieron en el Top 50 de al menos el 30\,\% de los países, como \emph{Die With A Smile}, presente en el 95,8\,\% de ellos. Luego se repitió todo el procedimiento. La similitud mediana entre países cae de $0{,}056$ a casi $0$: los éxitos globales sostienen casi toda la similitud. El bloque hispano se mantiene, pero ahora el \emph{eigengap} sugiere 7 grupos (Figura~\ref{fig:local}):
+\textbf{Experimento 2: quitar los éxitos globales} (Tabla~\ref{tab:e2}). Se eliminaron las 313 canciones que estuvieron en el Top 50 de al menos el 30\,\% de los países, como \emph{Die With A Smile}, presente en el 95,8\,\% de ellos. Luego se repitió todo el procedimiento. La similitud mediana entre países cae de $0{,}056$ a casi $0$: los éxitos globales sostienen casi toda la similitud. El bloque hispano se mantiene, pero ahora el \emph{eigengap} sugiere 7 grupos (Figura~\ref{fig:local}):
 \begin{itemize}[leftmargin=1.5em]
 \item Brasil y Portugal forman un bloque lusófono.
 \item Italia se une al bloque hispano.
@@ -351,7 +351,7 @@ Modularidad & 0,485 & 0,474\\
 \caption{Comunidades al quitar los éxitos globales ($k=7$, elegido por \emph{eigengap}).}\label{fig:local}
 \end{figure}
 
-Experimento 3: red con pesos frente a red sin pesos (Tabla~\ref{tab:e3}). Se mantuvieron exactamente las mismas aristas, porque cada país sigue conectado con sus 12 países más parecidos, pero todas pasaron a valer 1. Con $k=2$ la partición es idéntica, de modo que el bloque hispano no depende de los pesos. Sin pesos, $\lambda_2$ sube de $0{,}0003$ a $0{,}004$, porque la arista débil Japón–Perú vale lo mismo que cualquier otra, y el \emph{eigengap} deja de apoyar $k=4$ (Figura~\ref{fig:pesos}a). Con $k=4$ la partición cambia bastante (ARI $=0{,}55$ con la partición base, donde 1 indica particiones idénticas): el mundo anglosajón se separa de Europa continental y desaparece el grupo India–Pakistán, ya que India queda con Europa continental, lo que no tiene sentido musical (Figura~\ref{fig:pesos}b). La modularidad baja de $0{,}49$ a $0{,}44$. Los pesos importan para la estructura más fina, porque evitan que las conexiones débiles cuenten igual que las fuertes.
+\textbf{Experimento 3: red con pesos frente a red sin pesos} (Tabla~\ref{tab:e3}). Se mantuvieron exactamente las mismas aristas, porque cada país sigue conectado con sus 12 países más parecidos, pero todas pasaron a valer 1. Con $k=2$ la partición es idéntica, de modo que el bloque hispano no depende de los pesos. Sin pesos, $\lambda_2$ sube de $0{,}0003$ a $0{,}004$, porque la arista débil Japón–Perú vale lo mismo que cualquier otra, y el \emph{eigengap} deja de apoyar $k=4$ (Figura~\ref{fig:pesos}a). Con $k=4$ la partición cambia bastante (ARI $=0{,}55$ con la partición base, donde 1 indica particiones idénticas): el mundo anglosajón se separa de Europa continental y desaparece el grupo India–Pakistán, ya que India queda con Europa continental, lo que no tiene sentido musical (Figura~\ref{fig:pesos}b). La modularidad baja de $0{,}49$ a $0{,}44$. Los pesos importan para la estructura más fina, porque evitan que las conexiones débiles cuenten igual que las fuertes.
 
 \begin{table}[H]
 \centering\small
@@ -379,7 +379,7 @@ Modularidad & 0,485 & 0,436\\
 
 \subsection{Limitaciones y extensiones}
 
-Limitaciones.
+\textbf{Limitaciones.}
 \begin{itemize}[leftmargin=1.5em]
 \item Solo se observa el Top 50 de cada país.
 \item Spotify no opera en algunos mercados grandes, como China.
@@ -390,7 +390,7 @@ Limitaciones.
 \item El grupo India–Pakistán tiene solo dos países.
 \end{itemize}
 
-Extensión propuesta. Construir una red por mes (red temporal) para estudiar si las comunidades cambian a lo largo del año, por ejemplo con los éxitos de verano de cada hemisferio. También se podrían comparar los resultados con métodos que maximizan la modularidad, como Louvain.
+\textbf{Extensión propuesta.} Construir una red por mes (red temporal) para estudiar si las comunidades cambian a lo largo del año, por ejemplo con los éxitos de verano de cada hemisferio. También se podrían comparar los resultados con métodos que maximizan la modularidad, como Louvain.
 
 % ------------------------------------------------------------------ CONCLUSIONES
 \section{Conclusiones}
@@ -427,28 +427,28 @@ Las principales limitaciones son la cobertura de los datos y lo discutibles que 
 \section*{Declaración de uso de Inteligencia Artificial}
 \addcontentsline{toc}{section}{Declaración de uso de Inteligencia Artificial}
 
-Modelo utilizado.
+\textbf{Modelo utilizado.}
 \begin{itemize}[leftmargin=1.5em]
 \item Claude. Claude Opus 5.5.
 \item Chat GPT. 6 Luna
 \end{itemize}
 
-Modalidad de uso.
+\textbf{Modalidad de uso.}
 \begin{itemize}[leftmargin=1.5em]
 \item Claude: Aplicación descargada en el laptop localmente.
 \item Luna: Aplicación descargada en el laptop localmente.
 \end{itemize}
 
-Uso de las respuestas. Los prompts se agrupan según las etapas del trabajo. Para cada conjunto se indica qué se le pidió a la herramienta y en qué parte del informe o del código se usaron sus respuestas.
+\textbf{Uso de las respuestas.} Los prompts se agrupan según las etapas del trabajo. Para cada conjunto se indica qué se le pidió a la herramienta y en qué parte del informe o del código se usaron sus respuestas.
 
 \begin{enumerate}[leftmargin=1.5em]
-\item Comprensión del enunciado y elección de los datos. Se pidió explicar los requisitos del trabajo y los criterios para elegir una base de datos y una pregunta de análisis, proponer bases de datos posibles. \emph{Uso:} explicación de conceptos y apoyo a la elección de la base de datos, (Sección 3.1). La base, el enfoque (red de países) y las preguntas fueron elegidos por el equipo.
-\item Decisiones metodológicas. Se pidió aclarar la estructura de los datos (el Top 50 cambia cada día), excluir el Top 50 Global, usar todo el período y definir el clima de cada país según dónde vive su población, con la categoría ``Variado'' solo para países imposibles de encasillar. \emph{Uso:} decisiones de preprocesamiento, medida de similitud y criterio de clima (Sección 3.2). Los criterios del clima fueron definidos por el equipo.
-\item Código y visualizaciones. Se pidió desarrollar el notebook en Python: descarga y limpieza de los datos, cálculo del clima, construcción de la red, implementación del clustering espectral, experimentos y gráficos (componentes conexas, espectro y \emph{eigengap}, vector de Fiedler, mapas de comunidades, representación espectral y red). \emph{Uso:} generación, corrección y depuración de código, análisis exploratorio y preparación de las Figuras 1 a 9 (Secciones 3.3 a 3.5).
-\item Redacción del informe. Se pidió ayuda en ciertas secciones para mejorar la redacción y además creación de formulas en Latex, junto con los subtitulos a las imágenes y las tablas
+\item \textbf{Comprensión del enunciado y elección de los datos.} Se pidió explicar los requisitos del trabajo y los criterios para elegir una base de datos y una pregunta de análisis, proponer bases de datos posibles. \emph{Uso:} explicación de conceptos y apoyo a la elección de la base de datos, (Sección 3.1). La base, el enfoque (red de países) y las preguntas fueron elegidos por el equipo.
+\item \textbf{Decisiones metodológicas.} Se pidió aclarar la estructura de los datos (el Top 50 cambia cada día), excluir el Top 50 Global, usar todo el período y definir el clima de cada país según dónde vive su población, con la categoría ``Variado'' solo para países imposibles de encasillar. \emph{Uso:} decisiones de preprocesamiento, medida de similitud y criterio de clima (Sección 3.2). Los criterios del clima fueron definidos por el equipo.
+\item \textbf{Código y visualizaciones.} Se pidió desarrollar el notebook en Python: descarga y limpieza de los datos, cálculo del clima, construcción de la red, implementación del clustering espectral, experimentos y gráficos (componentes conexas, espectro y \emph{eigengap}, vector de Fiedler, mapas de comunidades, representación espectral y red). \emph{Uso:} generación, corrección y depuración de código, análisis exploratorio y preparación de las Figuras 1 a 9 (Secciones 3.3 a 3.5).
+\item \textbf{Redacción del informe.} Se pidió ayuda en ciertas secciones para mejorar la redacción y además creación de formulas en Latex, junto con los subtitulos a las imágenes y las tablas
 \end{enumerate}
 
-Prompts utilizados.
+\textbf{Prompts utilizados.}
 \begin{enumerate}[leftmargin=1.5em]
 \item ``Inspecciona el CSV de Spotify y resume sus columnas, fechas, países, canciones, valores faltantes y duplicados.''
 \item ``Limpia los datos usando todo el período indicado, excluye el Top 50 Global y elimina duplicados por país, fecha y canción.''
