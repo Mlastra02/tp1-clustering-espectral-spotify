@@ -1,0 +1,73 @@
+﻿,nombre,continente,idioma,clima,prop_dom,temp_desv
+AR,Argentina,América Latina,Español,Templado,0.8566796414471715,2.3693066093191164
+BO,Bolivia,América Latina,Español,Variado,0.343837656883322,6.053438600726294
+BR,Brasil,América Latina,Portugués,Tropical,0.625203467145627,2.9521200592487555
+CL,Chile,América Latina,Español,Seco,0.5028233334433774,1.8182065803518401
+CO,Colombia,América Latina,Español,Tropical,0.6734269309116168,6.035715394048325
+EC,Ecuador,América Latina,Español,Variado,0.44103969673667137,6.585356532156135
+PE,Perú,América Latina,Español,Seco,0.80340626665214,4.154079103912093
+PY,Paraguay,América Latina,Español,Templado,0.9683076880129988,0.5967938597650286
+UY,Uruguay,América Latina,Español,Templado,1.0,0.8200270819255313
+VE,Venezuela,América Latina,Español,Tropical,0.7907338322467341,2.9290572511101587
+CR,Costa Rica,América Latina,Español,Tropical,0.9797524829741634,2.8125436189591086
+DO,Rep. Dominicana,América Latina,Español,Tropical,0.9850800897002417,0.9847933299840106
+GT,Guatemala,América Latina,Español,Variado,0.5409535518404058,3.8916773727576897
+HN,Honduras,América Latina,Español,Tropical,0.9921778824719355,2.2705011692488335
+MX,México,América Latina,Español,Variado,0.4860934596985914,3.580703647301642
+NI,Nicaragua,América Latina,Español,Tropical,1.0,1.5688089928514237
+PA,Panamá,América Latina,Español,Tropical,1.0,0.32291725521117876
+SV,El Salvador,América Latina,Español,Tropical,1.0,1.0786949303850957
+CA,Canadá,Norteamérica,Inglés,Continental,0.8613976074621168,2.1724777038754692
+US,Estados Unidos,Norteamérica,Inglés,Variado,0.5338067117855494,4.573913906325665
+DK,Dinamarca,Europa,Danés,Templado,1.0,0.3474566626915656
+EE,Estonia,Europa,Estonio,Continental,1.0,0.3283448670178786
+FI,Finlandia,Europa,Finés,Continental,1.0,1.045632513076688
+GB,Reino Unido,Europa,Inglés,Templado,1.0,0.7132812336151573
+IE,Irlanda,Europa,Inglés,Templado,1.0,0.4971145834957997
+IS,Islandia,Europa,Islandés,Templado,0.9216689218930859,0.5994555188345366
+LT,Lituania,Europa,Lituano,Continental,1.0,0.40485966221683517
+LV,Letonia,Europa,Letón,Continental,1.0,0.3650000440180733
+NO,Noruega,Europa,Noruego,Continental,0.7042992764005626,1.2135930682897118
+SE,Suecia,Europa,Sueco,Continental,0.7324168656027081,1.2844860001560325
+AT,Austria,Europa,Alemán,Templado,0.747958403755194,1.3038896593636633
+BE,Bélgica,Europa,Neerlandés,Templado,1.0,0.3269051969178691
+CH,Suiza,Europa,Alemán,Templado,0.9758910648965128,1.0056519493571603
+DE,Alemania,Europa,Alemán,Templado,0.9564221192515874,0.7869307603380502
+FR,Francia,Europa,Francés,Templado,0.9328183409603779,1.5039526748898204
+LU,Luxemburgo,Europa,Luxemburgués,Templado,1.0,0.1586420519047012
+NL,Países Bajos,Europa,Neerlandés,Templado,1.0,0.2467555736856618
+BG,Bulgaria,Europa,Búlgaro,Templado,0.5601219571617144,1.0850048994462698
+BY,Bielorrusia,Europa,Ruso,Continental,1.0,0.5748625849740845
+CZ,Chequia,Europa,Checo,Continental,0.7468647201326023,0.7280060884188092
+HU,Hungría,Europa,Húngaro,Continental,0.6824609286646847,0.5551141542572462
+PL,Polonia,Europa,Polaco,Continental,0.8807160547735755,0.5113887362527015
+RO,Rumania,Europa,Rumano,Continental,0.7562345359755327,1.5883424955310999
+SK,Eslovaquia,Europa,Eslovaco,Continental,0.6428477531841537,1.4293584676838957
+UA,Ucrania,Europa,Ucraniano,Continental,0.8040212489781328,1.0939720642332913
+ES,España,Europa,Español,Seco,0.6444274585429408,1.9377908674885094
+GR,Grecia,Europa,Griego,Templado,0.7790780690786011,1.3764974188640184
+IT,Italia,Europa,Italiano,Templado,0.9199067923188485,1.94396946426841
+PT,Portugal,Europa,Portugués,Templado,1.0,1.256517724439616
+AE,Emiratos Árabes,Medio Oriente y N. África,Árabe,Seco,1.0,0.36354445375072214
+EG,Egipto,Medio Oriente y N. África,Árabe,Seco,1.0,1.2150780660812672
+IL,Israel,Medio Oriente y N. África,Hebreo,Templado,0.9132383778155001,0.8645686599776796
+MA,Marruecos,Medio Oriente y N. África,Árabe,Templado,0.6984816490152771,1.0693817849128597
+SA,Arabia Saudita,Medio Oriente y N. África,Árabe,Seco,1.0,2.5182550539056603
+TR,Turquía,Medio Oriente y N. África,Turco,Templado,0.7646848979672793,2.7544572924163173
+NG,Nigeria,África Subsahariana,Inglés,Tropical,0.9412769030756243,0.9255527302742563
+ZA,Sudáfrica,África Subsahariana,Inglés,Templado,0.7601879973601644,1.7302753239923723
+HK,Hong Kong,Asia,Chino,Templado,1.0,0.1638226118203941
+JP,Japón,Asia,Japonés,Templado,0.9337564886079389,2.292341932181228
+KR,Corea del Sur,Asia,Coreano,Continental,0.6272201659865229,0.999254781299054
+TW,Taiwán,Asia,Chino,Templado,0.7909429086499528,1.3450561512473658
+ID,Indonesia,Asia,Indonesio,Tropical,0.9961062495326855,1.8193772372265256
+MY,Malasia,Asia,Malayo,Tropical,1.0,0.5610714238349925
+PH,Filipinas,Asia,Filipino,Tropical,0.9957003961549672,0.8019809362299595
+SG,Singapur,Asia,Inglés,Tropical,1.0,0.11844383824353648
+TH,Tailandia,Asia,Tailandés,Tropical,1.0,0.778457418115938
+VN,Vietnam,Asia,Vietnamita,Tropical,0.6208975292422144,2.0170579552884274
+IN,India,Asia,Hindi,Tropical,0.5156784964129723,1.8860800453318038
+PK,Pakistán,Asia,Urdu,Seco,0.8806304768590744,2.8591197115325584
+KZ,Kazajistán,Asia,Kazajo,Seco,0.640847144540752,3.9864754477606272
+AU,Australia,Oceanía,Inglés,Templado,0.8784973232375706,2.5937184105915088
+NZ,Nueva Zelanda,Oceanía,Inglés,Templado,1.0,1.5623505611869235

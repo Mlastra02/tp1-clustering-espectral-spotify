@@ -1,0 +1,16 @@
+# Datos descargados por el notebook (demasiado grandes para GitHub)
+data/
+
+# Videos y comprimidos
+*.mp4
+*.mov
+*.zip
+
+# Archivos temporales
+~$*
+.ipynb_checkpoints/
+__pycache__/
+*.aux
+*.log
+*.out
+*.toc
